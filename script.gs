@@ -56,14 +56,41 @@ function startCopy(sourceid) {
 function copyFiles(sfolder, dfolder) {
   var files = sfolder.getFiles();
   var file;
+  var newFile;
   var fname;
 
   while(files.hasNext()) {
     file = files.next();
     fname = file.getName();
     Logger.log("Copying " + fname);
-    file.makeCopy(fname, dfolder);
+    newFile = file.makeCopy(fname, dfolder);
+	//Try to copy the sharing settings
+	copySharingSettings(file, newFile);
   }
+};
+
+/**
+ * Copies the viewers and editors from the source File 
+ * into the destination File.  Annoying because it notifies 
+ * all users and there appears to be no way to disable that
+ */
+function copySharingSettings(sourceFile, destFile)
+{
+	//Get the viewers and the editors
+	var theEditors = sourceFile.getEditors();
+	var theViewers = sourceFile.getViewers();
+	
+	//Apply the viewers first since in my limited testing people will show up in both places
+	for( var i = 0; i < theViewers.length; i++ )
+	{
+		destFile.addViewer(theViewers[0]);
+	}
+	
+	//Apply the editors second.  Documentation states that if the user was added as a viewer they will be moved to an editor
+	for( var j = 0; j < theEditors.length; j++ )
+	{
+		destFile.addEditor(theEditors[j]);
+	}
 };
 
 
@@ -147,3 +174,15 @@ function removeTriggers() {
     }   
 };
 
+/**
+ * Runs when the add-on is installed.
+ *
+ * @param {object} e The event parameter for a simple onInstall trigger. To
+ *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
+ *     running in, inspect e.authMode. (In practice, onInstall triggers always
+ *     run in AuthMode.FULL, but onOpen triggers may be AuthMode.LIMITED or
+ *     AuthMode.NONE.)
+ */
+function onInstall(e) {
+  doGet();
+};
