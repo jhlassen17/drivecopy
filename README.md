@@ -1,7 +1,7 @@
 drivecopy
 =========
 
-Google Apps Script to copy folders in Google Drive.
+Fork of the original Google Apps Script to copy folders in Google Drive created by metricube.
 
 ## Motive
 There is a limitation in Google Drive where you can't transfer ownership between
@@ -9,8 +9,7 @@ a Google Account and a Google Apps Accounts.   This script was created to facili
 copying of a directory tree.
 
 ## Installation
-The script can be installed by going to http://script.google.com and copying the script.gs file or a live version can
-be accessed from:  https://script.google.com/macros/s/AKfycbwb6cXjEb08CcfIjQ59rTlrW6Klz6rUO7xSvMxDbfbnJhNj9Opd/exec
+The script can be installed by going to http://script.google.com and copying the script.gs file
 
 ## Usage
 1. Make sure the source folder is shared so that the target Google Drive account has access to the files
